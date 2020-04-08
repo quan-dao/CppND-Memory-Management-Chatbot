@@ -99,7 +99,7 @@ ChatBot::ChatBot(ChatBot &&src)
 
 ChatBot &ChatBot::operator=(ChatBot &&src)
 {
-    std::cout<<"ChatBot copy constructor\n";
+    std::cout<<"ChatBot move assignment operator\n";
     if (this == &src) {return *this;}
 
     // release resource _image points to
