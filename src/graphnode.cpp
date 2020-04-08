@@ -13,6 +13,13 @@ GraphNode::~GraphNode()
 
     // delete _chatBot; 
 
+    // // release resource handle by elements of _childEdges
+    // for (auto it = std::begin(_childEdges); it < std::end(_childEdges); ++it)
+    // {
+    //     delete *it;
+    //     *it = NULL;
+    // }
+
     ////
     //// EOF STUDENT CODE
 }
@@ -27,9 +34,9 @@ void GraphNode::AddEdgeToParentNode(GraphEdge *edge)
     _parentEdges.push_back(edge);
 }
 
-void GraphNode::AddEdgeToChildNode(GraphEdge *edge)
+void GraphNode::AddEdgeToChildNode(std::unique_ptr<GraphEdge> edge)
 {
-    _childEdges.push_back(edge);
+    _childEdges.push_back(std::move(edge)); // here again pass a unique_ptr to a function
 }
 
 //// STUDENT CODE
@@ -53,7 +60,7 @@ GraphEdge *GraphNode::GetChildEdgeAtIndex(int index)
     //// STUDENT CODE
     ////
 
-    return _childEdges[index];
+    return _childEdges[index].get();
 
     ////
     //// EOF STUDENT CODE
