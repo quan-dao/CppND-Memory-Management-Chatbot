@@ -44,6 +44,72 @@ ChatBot::~ChatBot()
 
 //// STUDENT CODE
 ////
+ChatBot::ChatBot(const ChatBot &src)
+{
+    std::cout<<"ChatBot copy constructor\n";
+    // deep copy for _image
+    // allocate resource for _image
+    _image = new wxBitmap(src._image->GetWidth(), src._image->GetHeight());
+    // copy content
+    *_image = *src._image;
+
+    // shallow copy for the rest
+    _currentNode = src._currentNode;
+    _rootNode = src._rootNode;
+    _chatLogic = src._chatLogic;
+}
+
+ChatBot &ChatBot::operator=(const ChatBot &src)
+{
+    std::cout<<"ChatBot copy assignment operator\n";
+    if (this == &src) {return *this;}  
+
+    // release resource _image points to
+    delete _image;
+    // deep copy _image
+     _image = new wxBitmap(src._image->GetWidth(), src._image->GetHeight());
+    *_image = *src._image;
+
+    // shallow copy the rest
+    _currentNode = src._currentNode;
+    _rootNode = src._rootNode;
+    _chatLogic = src._chatLogic;
+
+    return *this;
+}
+
+ChatBot::ChatBot(ChatBot &&src)
+{
+    std::cout<<"ChatBot move constructor\n";
+    // resource is already allocated, just redirect it
+    _image = src._image;
+    // invalidate src
+    src._image = NULL;
+
+    // shallow copy the rest
+    _currentNode = src._currentNode;
+    _rootNode = src._rootNode;
+    _chatLogic = src._chatLogic;
+}
+
+ChatBot &ChatBot::operator=(ChatBot &&src)
+{
+    std::cout<<"ChatBot move constructor\n";
+    if (this == &src) {return *this;}
+
+    // release resource _image points to
+    delete _image;
+    // just redirect src resource handle
+    _image = src._image;
+    // invalidate src
+    src._image = NULL;
+
+    // shallow copy the rest
+    _currentNode = src._currentNode;
+    _rootNode = src._rootNode;
+    _chatLogic = src._chatLogic;
+    return *this;
+}
 
 ////
 //// EOF STUDENT CODE
